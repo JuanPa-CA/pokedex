@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="pok.css">
+    <script src="pok.js" defer></script>
+    <title>Pokédex</title>
+</head>
+<body>
+    <div class="main-wrapper">
+        <header>
+            <div id="logo-container">
+                <a href="javascript:void(0)" onclick="window.location.reload();">
+                    <img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg" alt="Pokémon Logo">
+                </a>
+                <a href="https://pokeapi.co/" target="_blank">
+                    <img id="pokeapi-link" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg" alt="PokeAPI Link">
+                </a>
+            </div>
+            
+            <div id="search-container">
+                <input id="pok" type="text" placeholder="Escriba el nombre o número de Pokémon" value="bulbasaur">
+                <button onclick="traer()">Buscar</button>
+            </div>
+        </header>
+
+        <div id="card-container" class="hidden">
+            <div id="left-panel">
+                <img id="img" alt="Pokémon Image">
+                <div id="basic-info">
+                    <p id="altura">Altura: ???m</p>
+                    <p id="peso">Peso: ???kg</p>
+                </div>
+            </div>
+
+            <div id="center-panel">
+                <h1 id="nombre">???</h1>
+                <h3 id="numero">#???</h3>
+
+                <h4 class="section-heading">Tipos del Pokémon</h4>
+                <div id="type-badges">
+                    </div>
+
+                <h4 class="section-heading">Debilidades del Pokémon</h4>
+                <div id="weakness-badges">
+                    </div>
+            </div>
+
+            <div id="right-panel">
+                <h4 class="section-heading">Estadísticas</h4>
+                <ul id="stats-list">
+                    </ul>
+            </div>
+        </div>
+
+        <h2 id="message" class="hidden" style="color: #CC0000;"></h2>
+    </div> <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+</html>
