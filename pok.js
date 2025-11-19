@@ -32,7 +32,7 @@ function getBackgroundStyle(types) {
 
 function resetCardContent() {
     document.getElementById("nombre").textContent = "nombre";
-    document.getElementById("numero").textContent = "#numero";
+    document.getElementById("numero").textContent = "#número";
     document.getElementById("img").src = INITIAL_POKEBALL_URL;
     document.getElementById("altura").textContent = "Altura: m";
     document.getElementById("peso").textContent = "Peso: kg";
@@ -377,3 +377,4 @@ document.addEventListener('keydown', (e) => {
         konamiSequence = '';
     }
 });
+
