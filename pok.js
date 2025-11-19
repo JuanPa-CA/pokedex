@@ -1,4 +1,3 @@
-// Mapeo de colores de tipos
 const TYPE_COLORS = {
     normal: '#A8A77A', fire: '#EE8130', water: '#6390F0', electric: '#F7D02C',
     grass: '#7AC74C', ice: '#96D9D6', fighting: '#C22E28', poison: '#A33EA1',
@@ -15,7 +14,7 @@ const STAT_NAMES = {
 
 const INITIAL_POKEBALL_URL = "https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg";
 
-// --- Funciones de Utilidad ---
+
 function capitalize(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
@@ -32,11 +31,11 @@ function getBackgroundStyle(types) {
 }
 
 function resetCardContent() {
-    document.getElementById("nombre").textContent = "???";
-    document.getElementById("numero").textContent = "#???";
+    document.getElementById("nombre").textContent = "nombre";
+    document.getElementById("numero").textContent = "#numero";
     document.getElementById("img").src = INITIAL_POKEBALL_URL;
-    document.getElementById("altura").textContent = "Altura: ???m";
-    document.getElementById("peso").textContent = "Peso: ???kg";
+    document.getElementById("altura").textContent = "Altura: m";
+    document.getElementById("peso").textContent = "Peso: kg";
     document.getElementById("left-panel").style.background = '#ccc'; // Fondo neutro para la Pokébola
     document.body.style.backgroundColor = '#f0f0f0';
     document.getElementById("type-badges").innerHTML = '<div class="type-badge" style="background-color: #666;">???</div>';
@@ -44,7 +43,7 @@ function resetCardContent() {
     document.getElementById("stats-list").innerHTML = '';
 }
 
-// --- LÓGICA DE CÁLCULO DE DEBILIDADES ---
+// --- CÁLCULO DE DEBILIDADES ---
 async function getWeaknesses(types) {
     const typeUrls = types.map(type => `https://pokeapi.co/api/v2/type/${type}`);
 
@@ -126,7 +125,8 @@ async function traer() {
 
         // 4. Aplicar Estilos (Fondo y Degradado)
         const primaryType = types[0];
-        document.getElementById("left-panel").style.background = getBackgroundStyle(types);
+        const backgroundStyle = getBackgroundStyle(types); // OBTENER ESTILO PARA PANEL Y BARRAS
+        document.getElementById("left-panel").style.background = backgroundStyle; // Aplicar a left-panel
         document.body.style.backgroundColor = primaryType ? TYPE_COLORS[primaryType] + 'aa' : '#f0f0f0';
 
         // 5. Generar Tipos
@@ -162,11 +162,11 @@ async function traer() {
             listItem.className = 'stat-item';
 
             listItem.innerHTML = `
-                        <div class="stat-name">${name}: ${value}/${MAX_STAT_VALUE}</div>
-                        <div class="stat-bar-container">
-                            <div class="stat-bar" style="width: ${percentage > 100 ? 100 : percentage}%;"></div>
-                        </div>
-                    `;
+                <div class="stat-name">${name}: ${value}/${MAX_STAT_VALUE}</div>
+                <div class="stat-bar-container">
+                    <div class="stat-bar" style="width: ${percentage > 100 ? 100 : percentage}%; background: ${backgroundStyle};"></div>
+                    </div>
+            `;
             statsList.appendChild(listItem);
         });
 
@@ -189,7 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
     resetCardContent(); // Inicializa con '???' y Pokébola
     document.getElementById("card-container").classList.remove('hidden'); // Asegura que la tarjeta esté visible (aunque con contenido inicial)
     document.getElementById("card-container").classList.add('visible'); // Activa la animación inicial
-    traer();
+    // Llamar a traer() aquí puede causar un error si el input está vacío. Se recomienda solo resetear.
+    // traer(); // Comentado o eliminado para evitar búsqueda vacía al cargar
 });
 
 
@@ -198,8 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const KONAMI_CODE = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba';
 let konamiSequence = ''; // Almacena la secuencia de teclas presionadas
 let isShinyModeActive = false;
-const MAX_POKEMON_ID = 1025; // Número máximo de Pokémon en la PokeAPI (cambiado de 151 a 1025 para más variedad)
-let currentPokemonId = 1; // Variable para almacenar el ID del Pokémon actualmente mostrado (útil para desactivar el Shiny)
+const MAX_POKEMON_ID = 1025; // Número máximo de Pokémon en la PokeAPI
+let currentPokemonId = 1; // Variable para almacenar el ID del Pokémon actualmente mostrado
 
 // Elementos del DOM
 const imgElement = document.getElementById('img');
@@ -249,7 +250,8 @@ async function loadPokemonDetails(pokemonIdOrName, isShiny = false) {
 
         // 3. Aplicar Estilos (Fondo y Degradado)
         const primaryType = types[0];
-        document.getElementById("left-panel").style.background = getBackgroundStyle(types);
+        const backgroundStyle = getBackgroundStyle(types); // OBTENER ESTILO PARA PANEL Y BARRAS
+        document.getElementById("left-panel").style.background = backgroundStyle; // Aplicar a left-panel
 
         // El fondo del body cambia solo si NO es el modo shiny
         if (!isShiny) {
@@ -294,8 +296,8 @@ async function loadPokemonDetails(pokemonIdOrName, isShiny = false) {
             listItem.innerHTML = `
                 <div class="stat-name">${name}: ${value}/${MAX_STAT_VALUE}</div>
                 <div class="stat-bar-container">
-                    <div class="stat-bar" style="width: ${percentage > 100 ? 100 : percentage}%;"></div>
-                </div>
+                    <div class="stat-bar" style="width: ${percentage > 100 ? 100 : percentage}%; background: ${backgroundStyle};"></div>
+                    </div>
             `;
             statsList.appendChild(listItem);
         });
@@ -375,6 +377,3 @@ document.addEventListener('keydown', (e) => {
         konamiSequence = '';
     }
 });
-
-
-
