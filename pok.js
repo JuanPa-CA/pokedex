@@ -377,4 +377,3 @@ document.addEventListener('keydown', (e) => {
         konamiSequence = '';
     }
 });
-
